@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Pendaftaran Tamu</h1>
-    <form action="confirmation.php" method="POST">
+    <form action="../Model/registration.php" method="POST">
         <input type="text" name="name" placeholder="Nama Lengkap" required>
         <input type="email" name="email" placeholder="Alamat Email" required>
         <input type="text" name="phone" placeholder="Nomor Telepon (opsional)">

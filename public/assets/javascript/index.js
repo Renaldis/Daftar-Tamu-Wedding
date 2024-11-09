@@ -10,19 +10,17 @@ button.addEventListener("mouseout", () => {
   button.style.color = "#333";
 });
 
-const buttonInvitation = document
-  .querySelector(".openInvitation")
+const buttonInvitation = document.querySelector(".openInvitation");
+buttonInvitation.addEventListener("click", function () {
+  // Menambahkan class untuk animasi
+  document.body.classList.add("animate-up");
 
-  .addEventListener("click", function () {
-    // Menambahkan class untuk animasi
-    document.body.classList.add("animate-up");
-
-    // Tunggu animasi selesai
-    setTimeout(function () {
-      // Setelah animasi selesai, arahkan ke halaman baru
-      window.location.href = "beranda.php"; // Ganti dengan URL halaman yang diinginkan
-    }, 500); // Durasi yang sama seperti waktu animasi
-  });
+  // Tunggu animasi selesai
+  setTimeout(function () {
+    // Setelah animasi selesai, arahkan ke halaman baru
+    window.location.href = "home.php"; // Ganti dengan URL halaman yang diinginkan
+  }, 500); // Durasi yang sama seperti waktu animasi
+});
 
 // DIBAWAH INI UNTUK BERANDA
 
@@ -47,6 +45,6 @@ document
 
     // Tunggu animasi selesai
     setTimeout(function () {
-      window.location.href = "beranda.php"; // Arahkan ke beranda setelah animasi
+      window.location.href = "home.php"; // Arahkan ke beranda setelah animasi
     }, 500);
   });
