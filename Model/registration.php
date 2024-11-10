@@ -22,7 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'food_preference' => $food_preference,
         'notes' => $notes
     ];
-
+    // Hapus valid_code untuk mencegah penggunaan ulang kode RSVP
+    unset($_SESSION['valid_code']);
+    
     header("Location: ../public/confirmation.php");
     exit();
 }

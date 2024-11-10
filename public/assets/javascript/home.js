@@ -18,3 +18,31 @@ window.addEventListener("scroll", function () {
     }
   });
 });
+
+// music control
+// button start and stop
+const startButton = document.getElementById("play-button");
+const stopButton = document.getElementById("stop-button");
+const music = document.getElementById("bg-music");
+
+// Kontrol pemutaran musik
+startButton.onclick = function () {
+  music.play();
+  startButton.classList.add("hide");
+  stopButton.classList.remove("hide");
+};
+
+stopButton.onclick = function () {
+  music.pause();
+  music.currentTime = 0; // Set waktu ke awal
+  startButton.classList.remove("hide");
+  stopButton.classList.add("hide");
+};
+
+// Event listener untuk menampilkan pesan di console saat musik mulai diputar
+music.addEventListener("play", function () {
+  console.log("Music sudah terplay");
+  startButton.classList.add("hide");
+  stopButton.classList.remove("hide");
+});
+// music control

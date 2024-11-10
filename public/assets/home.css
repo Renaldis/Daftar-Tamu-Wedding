@@ -48,13 +48,7 @@ html {
 
 .navbar a.active {
     color: black;
-    /* Warna saat link aktif */
     font-weight: bold;
-    /* Menebalkan teks saat aktif */
-    border-bottom: 3px solid black;
-    /* Garis bawah saat aktif */
-    padding-bottom: 20px;
-    /* Menambah padding bawah untuk ruang */
 }
 
 .navbar i {
@@ -134,8 +128,12 @@ main {
 }
 
 .groom-bride-section .overlay .profile-wrap .profile img {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .groom-bride-section .overlay .profile-wrap .profile h3 {
@@ -475,3 +473,40 @@ main {
 }
 
 /* COMMENTS */
+
+/* MUSIC */
+.music-control {
+    position: fixed;
+    /* Mengapung di posisi tetap */
+    bottom: 20px;
+    /* Jarak dari bawah */
+    left: 20px;
+    /* Jarak dari kiri */
+    z-index: 1000;
+    /* Akan selalu di atas elemen lainnya */
+}
+
+.music-control button.hide {
+    display: none;
+}
+
+.music-button {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.music-button img {
+    width: 100%;
+    height: auto;
+}
+
+/* MUSIC */

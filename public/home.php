@@ -5,6 +5,8 @@ session_start();
 if(isset($_POST['code-rsvp'])){
     $code = $_POST['code-rsvp'];
     if($code == '123456'){
+      // Simpan data ke sesi untuk digunakan di registration-view.php
+      $_SESSION['valid_code'] = true;
         header('Location: registration-view.php');
         exit();
     } else {
@@ -13,6 +15,7 @@ if(isset($_POST['code-rsvp'])){
 }
     // Hapus session sebelumnya
     if(isset($_SESSION['guest_data'])){
+      header("Location: home.php");
       unset($_SESSION['guest_data']);
       exit();
     }
@@ -26,6 +29,7 @@ if(isset($_POST['code-rsvp'])){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/userUI.css">
   <link rel="stylesheet" href="assets/home.css">
+  <link rel="stylesheet" href="style/home-mobile.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Roboto&amp;display=swap"
     rel="stylesheet" />
@@ -33,15 +37,21 @@ if(isset($_POST['code-rsvp'])){
 </head>
 
 <body >
+  <!-- Audio element for background music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="./assets/music/L-O-V-E.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+  </audio>
+
   <!-- Navbar -->
   <nav class="navbar">
     <ul>
       <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+    </ul>
       <li><a href="#couple"><i class="fas fa-heart"></i>Couple</a></li>
       <li><a href="#information"><i class="fas fa-calendar-alt"></i>Events</a></li>
       <li><a href="#rsvp"><i class="fas fa-envelope"></i>Invitation</a></li>
       <li><a href="#comments"><i class="fas fa-comments"></i>Comments</a></li>
-    </ul>
   </nav>
   <!-- Navbar -->
 
@@ -52,74 +62,75 @@ if(isset($_POST['code-rsvp'])){
       <p>By love and the grace of love, we cordially invite you to attend the Wedding Celebration of</p>
     </section>
     <section id="couple">
-      <div class="groom-bride-section">
-        <img alt="Background image of the groom and bride" class="wedding-image"
-          src="assets/img/womenNman.jpeg"
-          width="1200" />
+    <div class="groom-bride-section">
+        <img alt="Background image of the groom and bride" class="wedding-image" src="assets/img/womenNman.jpeg" width="1200" />
         <div class="overlay">
-          <h2>Groom and Bride</h2>
-          <div class="profile-wrap">
-            <div class="profile">
-              <img alt="Groom's profile picture" src="assets/img/man.jpeg"/>
-              <h3>M Fiqri Anies BBA. MoC</h3>
-              <p>Son of Mr. M Anies Hasan & Mrs Eva Elisa Wibisono</p>
-                <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
+            <h2>Groom and Bride</h2>
+            <div class="profile-wrap">
+                <div class="profile">
+                    <img alt="Groom's profile picture" src="assets/img/man.jpeg" />
+                    <h3>M Fiqri Anies BBA. MoC</h3>
+                    <p>Son of Mr. M Anies Hasan & Mrs Eva Elisa Wibisono</p>
+                    <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
+                </div>
+                <div class="profile and">
+                    <span>&</span>
+                </div>
+                <div class="profile">
+                    <img alt="Bride's profile picture" src="assets/img/women.jpeg" />
+                    <h3>Meiliza Dwi Putri S.E</h3>
+                    <p>Daughter of Mr. Nirwan Iskandar (Alm) & Mrs Elivo Nasution</p>
+                    <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
+                </div>
             </div>
-            <div class="profile and">
-              <span>&</span>
-            </div>
-            <div class="profile">
-              <img alt="Bride's profile picture" src="assets/img/women.jpeg"/>
-              <h3>Meiliza Dwi Putri S.E</h3>
-              <p>Daughter of Mr. Nirwan Iskandar (Alm) & Mrs Elivo Nasution</p>
-              <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
     <!-- Content -->
+
 
     <!-- Information -->
     <section id="information" class="information">
       <h2>Save The Date</h2>
       <h3 class="saturday">Saturday</h3>
-      <div class="dates">
-        <p class="date">29</p>
-        <p class="month">June<br>2024</p>
-      </div>
-      <div class="event">
-        <h2 class="title">Akad</h2>
-        <p class="time">09:30 - 11:00 <span>WIB</span></p>
-        <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
-      </div>
-      <div class="event">
-        <h2 class="title">Reception</h2>
-        <p class="time">12:00 - 14:30 <span>WIB</span></p>
-        <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
-      </div>
-      <div class="event">
-        <h2 class="title">Wedding Celebration</h2>
-        <h3>DRESS CODE : COCKTAIL ATTIRE</h3>
-        <p class="time">19:30 - 22:00 <span>WIB</span></p>
-        <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
-      </div>
-      <div class="location">
-        <h2>The St. Regis Jakarta</h2>
-        <p>Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi</p>
-        <p>Kota Jakarta Selatan</p>
-        <button><i class="fas fa-map-marker-alt"></i> View Map</button>
-      </div>
-    </section>
-    <!-- Information -->
-     <!-- GALLERY -->
-    <section class="gallery">
-   <img alt="Couple holding hands, man in white shirt and woman in silver dress" height="400" src="https://storage.googleapis.com/a1aa/image/9dAE1ng8Sf3RIyBNJEu6Y8Qziw3U6naCIJg0AuTOrt93wo3JA.jpg" width="600"/>
-   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="https://storage.googleapis.com/a1aa/image/Npj79tzNxV5kNRem6TuO0pPna7BOeJR5ycQHtB3TgnluhRvTA.jpg" width="600"/>
-   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="https://storage.googleapis.com/a1aa/image/Npj79tzNxV5kNRem6TuO0pPna7BOeJR5ycQHtB3TgnluhRvTA.jpg" width="600"/>
-   <img alt="Woman in black dress" height="400" src="https://storage.googleapis.com/a1aa/image/0nva0Sid0ObLFdS93YzSmbhJNX331Z2pysFuOltEJFRcY07E.jpg" width="600"/>
-   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="https://storage.googleapis.com/a1aa/image/Npj79tzNxV5kNRem6TuO0pPna7BOeJR5ycQHtB3TgnluhRvTA.jpg" width="600"/>
-   <img alt="Couple holding hands, man in white shirt and woman in silver dress" height="400" src="https://storage.googleapis.com/a1aa/image/9dAE1ng8Sf3RIyBNJEu6Y8Qziw3U6naCIJg0AuTOrt93wo3JA.jpg" width="600"/>
+        <div class="dates">
+            <p class="date">29</p>
+            <p class="month">June<br>2024</p>
+        </div>
+        <div class="information-wrapping">
+          <article class="event">
+            <h2 class="title">Akad</h2>
+            <p class="time">09:30 - 11:00 <span>WIB</span></p>
+            <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
+          </article>
+          <article class="event">
+            <h2 class="title">Reception</h2>
+            <p class="time">12:00 - 14:30 <span>WIB</span></p>
+            <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
+          </article>
+          <article class="event">
+            <h2 class="title">Wedding Celebration</h2>
+            <h3>DRESS CODE : COCKTAIL ATTIRE</h3>
+            <p class="time">19:30 - 22:00 <span>WIB</span></p>
+            <button><i class="fas fa-calendar-alt"></i> Add to Calendar</button>
+          </article>
+          <article class="location">
+            <h2>The St. Regis Jakarta</h2>
+            <p>Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi</p>
+            <p>Kota Jakarta Selatan</p>
+            <button><i class="fas fa-map-marker-alt"></i> View Map</button>
+          </article>
+        </div>
+      </section>
+      <!-- Information -->
+      <!-- GALLERY -->
+      <section class="gallery">
+   <img alt="Couple holding hands, man in white shirt and woman in silver dress" height="400" src="./assets/img/banner-hero1.jpg" width="600"/>
+   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="./assets/img/banner-hero2.jpg" width="600"/>
+   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="./assets/img/banner-hero3.jpg" width="600"/>
+   <img alt="Woman in black dress" height="400" src="./assets/img/banner-hero3.jpg" width="600"/>
+   <img alt="Couple in black attire, woman wearing pearl necklace" height="400" src="./assets/img/banner-hero2.jpg" width="600"/>
+   <img alt="Couple holding hands, man in white shirt and woman in silver dress" height="400" src="./assets/img/banner-hero1.jpg" width="600"/>
   </section>
      <!-- GALLERY -->
       <!-- RSVP -->
@@ -183,11 +194,17 @@ if(isset($_POST['code-rsvp'])){
         </div>
     </section>
        <!-- COMMENTS -->
+      <!-- MUSIC -->
+    <div class="music-control">
+      <button id="play-button" class="music-button">
+        <img src="./assets/img/play.png" alt="Play Music">
+      </button>
+      <button id="stop-button" class="hide music-button">
+        <img src="./assets/img/stop.png" alt="Stop Music">
+      </button>
+    </div>
+    <!-- MUSIC -->
   </main>
-
-
-
-  <a href="event-info.php" class="button">Daftar Tamu</a>
 
   <script src="assets/javascript/index.js"></script>
   <script src="assets/javascript/home.js"></script>
