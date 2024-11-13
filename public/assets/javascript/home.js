@@ -46,3 +46,37 @@ music.addEventListener("play", function () {
   stopButton.classList.remove("hide");
 });
 // music control
+
+// Countdown Timer
+// Countdown Timer
+// Set tanggal target untuk countdown
+const weddingDate = new Date("December 31, 2024 19:30:00").getTime();
+
+// Update countdown setiap 1 detik
+const countdownFunction = setInterval(function () {
+  const now = new Date().getTime(); // Waktu sekarang
+  const distance = weddingDate - now; // Selisih waktu
+
+  // Perhitungan waktu
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Menampilkan hasil
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+
+  // Jika countdown berakhir
+  if (distance < 0) {
+    clearInterval(countdownFunction);
+    document.querySelector(".countdown-timer").innerHTML =
+      "The event has started!";
+  }
+}, 1000); // Memperbarui setiap detik
+
+// Countdown Timer

@@ -12,6 +12,7 @@ if (isset($_SESSION['guest_data'])) {
     header("Location: home.php");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">

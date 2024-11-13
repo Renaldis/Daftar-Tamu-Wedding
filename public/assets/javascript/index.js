@@ -1,14 +1,14 @@
 const button = document.querySelector("button");
 
-button.addEventListener("mouseover", () => {
-  button.style.backgroundColor = "#333"; // Ganti dengan warna baru saat hover
-  button.style.color = "white";
-});
+// button.addEventListener("mouseover", () => {
+//   button.style.backgroundColor = "#fff"; // Ganti dengan warna baru saat hover
+//   button.style.color = "#333";
+// });
 
-button.addEventListener("mouseout", () => {
-  button.style.backgroundColor = "transparent"; // Kembali ke warna awal saat tidak hover
-  button.style.color = "#333";
-});
+// button.addEventListener("mouseout", () => {
+//   button.style.backgroundColor = "transparent"; // Kembali ke warna awal saat tidak hover
+//   button.style.color = "#fff";
+// });
 
 const buttonInvitation = document.querySelector(".openInvitation");
 buttonInvitation.addEventListener("click", function () {
@@ -34,17 +34,16 @@ if (sessionStorage.getItem("fromAnimation") === "true") {
 }
 
 // Menangkap event klik pada tombol
-document
-  .getElementById("openInvitation")
-  .addEventListener("click", function () {
-    // Menambahkan sessionStorage
-    sessionStorage.setItem("fromAnimation", "true");
+const buttonOpenInvitation = document.getElementById("openInvitation");
+buttonOpenInvitation.addEventListener("click", function () {
+  // Menambahkan sessionStorage
+  sessionStorage.setItem("fromAnimation", "true");
 
-    // Menerapkan animasi
-    document.body.classList.add("animate-up");
+  // Menerapkan animasi
+  document.body.classList.add("animate-up");
 
-    // Tunggu animasi selesai
-    setTimeout(function () {
-      window.location.href = "home.php"; // Arahkan ke beranda setelah animasi
-    }, 500);
-  });
+  // Tunggu animasi selesai
+  setTimeout(function () {
+    window.location.href = "home.php"; // Arahkan ke beranda setelah animasi
+  }, 500);
+});

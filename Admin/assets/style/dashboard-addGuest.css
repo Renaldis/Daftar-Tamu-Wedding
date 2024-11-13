@@ -1,10 +1,8 @@
-body {
+.main-addNewGuests {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   /* Hapus padding agar center bisa berfungsi dengan baik */
-  height: 100vh;
-  /* Biarkan body mengambil 100% tinggi viewport */
   display: flex;
   /* Gunakan Flexbox untuk memusatkan */
   justify-content: center;
@@ -12,7 +10,7 @@ body {
   align-items: center;
   /* Pusatkan secara vertikal */
   background-color: #f9f9f9;
-  background: url(../assets/img/bg-rsvp.jpg);
+  background: url(../img/bg-rsvp.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -21,22 +19,22 @@ body {
   background-color: #ffffff;
   width: 100%;
   max-width: 600px;
-  margin: auto;
+  margin: 10px auto;
   padding: 20px 0 40px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
+.formulir-rsvp h1 {
   color: #333333;
   text-align: center;
 }
 
-p {
+.formulir-rsvp p {
   color: #555;
 }
 
-button {
+.formulir-rsvp button {
   padding: 10px 20px;
   background-color: #28a745;
   color: white;
@@ -47,16 +45,16 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.formulir-rsvp button:hover {
   background-color: #218838;
 }
 
-form {
+.formulir-rsvp form {
   text-align: center;
 }
 
-input,
-textarea {
+.formulir-rsvp input,
+.formulir-rsvp textarea {
   display: block;
   width: 80%;
   margin: 10px auto;
@@ -66,13 +64,13 @@ textarea {
   transition: border-color 0.3s;
 }
 
-input:focus,
-textarea:focus {
+.formulir-rsvp input:focus,
+.formulir-rsvp textarea:focus {
   border-color: #28a745;
   outline: none;
 }
 
-.modal {
+.formulir-rsvp .modal {
   display: none;
   /* Tersembunyi secara default */
   position: fixed;
@@ -91,7 +89,7 @@ textarea:focus {
   /* Hitam dengan transparansi */
 }
 
-.modal-content {
+.formulir-rsvp .modal-content {
   background-color: #fefefe;
   /* Warna latar belakang */
   margin: auto;
@@ -113,10 +111,10 @@ textarea:focus {
   /* Mengangkat modal kembali setengah tinggi modal */
 }
 
-.confirm-wrapping {
+.formulir-rsvp .confirm-wrapping {
   display: flex;
 }
 
-.confirm-wrapping button {
+.formulir-rsvp .confirm-wrapping button {
   margin: 0 20px;
 }

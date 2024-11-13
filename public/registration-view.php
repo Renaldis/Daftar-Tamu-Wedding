@@ -22,11 +22,11 @@ if (!isset($_SESSION['valid_code']) || $_SESSION['valid_code'] !== true) {
 <div class="formulir-rsvp">
         <h1>Pendaftaran Tamu</h1>
         <form id="registration-form" action="../Model/registration.php" method="POST" onsubmit="confirmSubmission(event);">
-            <input type="text" name="name" placeholder="Nama Lengkap" required>
-            <input type="email" name="email" placeholder="Alamat Email" required>
-            <input type="text" name="phone" placeholder="Nomor Telepon (opsional)">
-            <input type="number" name="guests_count" placeholder="Jumlah Tamu yang Dibawa (opsional)">
-            <input type="text" name="food_preference" placeholder="Preferensi Makanan (opsional)">
+            <input type="text" name="name" placeholder="Nama Lengkap" required maxlength="50">
+            <input type="email" name="email" placeholder="Alamat Email" required maxlength="50">
+            <input type="text" name="phone" placeholder="Nomor Telepon" maxlength="15" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="number" name="guests_count" placeholder="Jumlah Tamu yang Dibawa (opsional)" maxlength="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="text" name="food_preference" placeholder="Preferensi Makanan (opsional)" maxlength="50">
             <textarea name="notes" placeholder="Catatan Tambahan (opsional)"></textarea>
             <button type="submit">Kirim</button>
         </form>
