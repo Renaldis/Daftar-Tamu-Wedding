@@ -51,7 +51,3 @@ window.onload = function () {
   document.getElementById("cancel-button").onclick = closeModal;
   document.getElementById("confirm-button").onclick = processForm;
 };
-
-// IMPORT MODAL
-
-// IMPORT MODAL

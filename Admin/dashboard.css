@@ -10,6 +10,7 @@ body {
   height: 100vh;
 }
 
+/* DASHBOARD */
 .sidebar {
   width: 150px;
   background-color: #19262f;
@@ -192,6 +193,7 @@ body {
   background-color: #fff3cd;
   color: #856404;
 }
+
 .main-dashboard .dashboard .card.comments {
   background-color: #c2ffc7;
   color: #856404;
@@ -338,8 +340,11 @@ a {
   color: #007bff;
 }
 
-/* MODAL KONFIRMASI */
-.modal {
+
+
+/* DASHBOARD */
+/* MODAL KONFIRMASI LOGOUT*/
+#logout-modal.modal {
   display: flex;
   /* Tampilkan flex untuk menampung konten */
   position: fixed;
@@ -395,6 +400,7 @@ button:hover {
 }
 
 /* MODAL KONFIRMASI */
+
 
 /* PAGINATION RECENT ACTIVITY */
 .pagination {

@@ -25,9 +25,9 @@ if (!isset($_SESSION['valid_code']) || $_SESSION['valid_code'] !== true) {
             <input type="text" name="name" placeholder="Nama Lengkap" required maxlength="50">
             <input type="email" name="email" placeholder="Alamat Email" required maxlength="50">
             <input type="text" name="phone" placeholder="Nomor Telepon" maxlength="15" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <input type="number" name="guests_count" placeholder="Jumlah Tamu yang Dibawa (opsional)" maxlength="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <input type="text" name="food_preference" placeholder="Preferensi Makanan (opsional)" maxlength="50">
-            <textarea name="notes" placeholder="Catatan Tambahan (opsional)"></textarea>
+            <input type="number" name="guests_count" placeholder="Jumlah Tamu yang Dibawa" maxlength="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <textarea name="notes" placeholder="Ucapan Selamat"></textarea>
+            <blockquote>*<strong>Notes:</strong> Ucapan selamat akan ditampilkan di halaman utama</blockquote>
             <button type="submit">Kirim</button>
         </form>
 

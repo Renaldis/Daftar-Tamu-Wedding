@@ -197,6 +197,7 @@ $guests = $stmt->fetchAll();
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="./assets/style/dashboard-addGuest.css">
+    <link rel="stylesheet" href="./assets/style/dashboard-importFile.css">
 </head>
 
 <body>
@@ -258,15 +259,28 @@ $guests = $stmt->fetchAll();
                             </div>
                             </form>
                         </div>
+                        <!-- Modal Import -->
+                        <div id="modal-import" class="modal">
+                            <div class="modal-content">
+                                <span id="close-import-modal" style="cursor:pointer; float:right;">&times;</span>
+                                <h2>Import File</h2>
+                                <p id="import-message"></p>
+
+                                <div class="import">
+                                    <form method="POST" enctype="multipart/form-data" class="import-file">
+                                        <input type="file" name="file" accept=".csv" required class="form input">
+                                        <div class="import-wrapping">
+                                            <button type="submit" name="import_guests" value="Import" class="btn" id="input-button">Ya, Proses Data</button>
+                                            <button class="btn" id="cancel-button">Tidak, Batalkan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Import -->
                         <div class="button">
                             <!-- Bagian form impor CSV -->
-                            <form method="POST" enctype="multipart/form-data" class=" import-file">
-                                <div class="import-file">
-                                    <input type="file" name="file" accept=".csv" required class="form input">
-                                    <input type="submit" name="import_guests" value="Import" class="btn greenLight">
-                                </div>
-                            </form>
-                            <!-- <button class="btn greenLight">Import</button> -->
+                                <button class="btn greenLight" id="button-import">Import</button>
                             <!-- Mengubah form untuk ekspor tamu -->
                             <?php if ($guestsCount > 0): ?>
                                 <form method="POST" class="form">
@@ -362,19 +376,6 @@ $guests = $stmt->fetchAll();
                             </div>
                         </div>
                 <!-- Modal Konfirmasi -->
-                <!-- Modal Import -->
-                        <div id="import-modal" class="modal">
-                            <div class="modal-content">
-                                <span id="close-modal" style="cursor:pointer; float:right;">&times;</span>
-                                <h2>Konfirmasi Data</h2>
-                                <p id="import-message"></p>
-                                <div class="confirm-wrapping">
-                                    <button id="confirm-button">Ya, Proses Data</button>
-                                    <button id="cancel-button">Tidak, Batalkan</button>
-                                </div>
-                            </div>
-                        </div>
-                <!-- Modal Import -->
                     </div>
                  </section>
                 <!-- SECTION ADD NEW GUESTS -->
@@ -394,6 +395,7 @@ $guests = $stmt->fetchAll();
         </div>
     </div>
     <script src="assets/javascript/dashboard.js"></script>
+    <script src="assets/javascript/dashboard-modal-import.js"></script>
     <script src="assets/javascript/dashboard-addGuest.js"></script>
     <script src="assets/javascript/dashboard-router.js"></script>
     <script src="./assets/javascript/registration-view.js"></script>

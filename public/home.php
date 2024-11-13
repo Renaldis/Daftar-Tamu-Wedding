@@ -180,7 +180,7 @@ if(isset($_POST['code-rsvp'])){
     <!-- RSVP -->
     <!-- COMMENTS -->
     <section id="comments" class="comments">
-      <h1>Your Warmest Wishes</h1>
+      <h1>Your Congratulations or Wishes</h1>
           <form method="POST" action="../Model/post_comment.php">
             <div class="form-group">
               <input type="text" name="name" placeholder="Name" required>
