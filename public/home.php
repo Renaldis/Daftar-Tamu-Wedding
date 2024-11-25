@@ -180,8 +180,8 @@ if(isset($_POST['code-rsvp'])){
     <!-- RSVP -->
     <!-- COMMENTS -->
     <section id="comments" class="comments">
-      <h1>Your Congratulations or Wishes</h1>
-          <form method="POST" action="../Model/post_comment.php">
+      <h1>Your Warmest Wishes</h1>
+          <!-- <form method="POST" action="../Model/post_comment.php">
             <div class="form-group">
               <input type="text" name="name" placeholder="Name" required>
             </div>
@@ -189,7 +189,7 @@ if(isset($_POST['code-rsvp'])){
               <textarea name="text" placeholder="Say something..." required></textarea>
             </div>
             <button type="submit">Post Comment</button>
-          </form>
+          </form> -->
       <div id="comment-list">
         <!-- Komentar yang ada akan ditampilkan di sini -->
         <?php

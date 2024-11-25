@@ -8,9 +8,9 @@ function confirmSubmission(event) {
   const guestsCount = document.querySelector(
     'input[name="guests_count"]'
   ).value;
-  const foodPreference = document.querySelector(
-    'input[name="food_preference"]'
-  ).value;
+  // const foodPreference = document.querySelector(
+  //   'input[name="food_preference"]'
+  // ).value;
   const notes = document.querySelector('textarea[name="notes"]').value;
 
   // Buat pesan konfirmasi
@@ -20,7 +20,7 @@ function confirmSubmission(event) {
     `<p>Email: ${email}</p>` +
     `<p>Telepon: ${phone}</p>` +
     `<p>Jumlah Tamu: ${guestsCount}</p>` +
-    `<p>Preferensi Makanan: ${foodPreference}</p>` +
+    // `<p>Preferensi Makanan: ${foodPreference}</p>` +
     `<p>Catatan: ${notes}`;
 
   // Tampilkan pesan konfirmasi di modal

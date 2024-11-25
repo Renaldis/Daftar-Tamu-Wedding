@@ -32,7 +32,6 @@ if (isset($_SESSION['guest_data'])) {
             <p><strong>Email:</strong> <?= htmlspecialchars($guest['email']) ?></p>
             <p><strong>Telepon:</strong> <?= htmlspecialchars($guest['phone']) ?></p>
             <p><strong>Jumlah Tamu:</strong> <?= htmlspecialchars($guest['guests_count']) ?></p>
-            <p><strong>Preferensi Makanan:</strong> <?= htmlspecialchars($guest['food_preference']) ?></p>
             <p><strong>Catatan:</strong> <?= htmlspecialchars($guest['notes']) ?></p>
             <p><strong>Information:</strong> Data anda sudah tersimpan. saat di resepsionis tinggal beritahukan nama lengkap anda</p>
         </div>
