@@ -194,16 +194,20 @@ if(isset($_POST['code-rsvp'])){
         <!-- Komentar yang ada akan ditampilkan di sini -->
         <?php
         require_once '../Config/db.php';
-        $sql = "SELECT * FROM comments ORDER BY created_at DESC";
+        $sql = "SELECT * FROM guests ORDER BY created_at DESC";
         $stmt = $pdo->query($sql);
         $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($comments as $comment) {
+          if($comment['notes'] != null){
             echo '<div class="comment">';
             echo '<div class="name">' . htmlspecialchars($comment['name']) . '</div>';
-            echo '<div class="text">' . htmlspecialchars($comment['text']) . '</div>';
+            echo '<div class="text">' . htmlspecialchars($comment['notes']) . '</div>';
             echo '<div class="time">' . date('d M Y H:i', strtotime($comment['created_at'])) . '</div>';
             echo '</div>';
+          }else{
+            echo "";
+          }
         }
         ?>
       </div>

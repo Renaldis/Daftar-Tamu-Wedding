@@ -91,7 +91,7 @@ if (isset($_POST['import_guests'])) {
                     $is_present = $data[6] ?? 0;
 
                     // Validasi dan format tanggal dari dd/mm/yyyy hh:mm:ss ke yyyy-mm-dd hh:mm:ss
-                    $dateTime = !empty($data[8]) ? explode(' ', $data[8]) : null;
+                    $dateTime = !empty($data[7]) ? explode(' ', $data[7]) : null;
                     if ($dateTime) {
                         $date = $dateTime[0]; // Bagian tanggal
                         $time = $dateTime[1] ?? '00:00:00'; // Bagian waktu (atau default ke 00:00:00)
@@ -183,28 +183,46 @@ $guests = $stmt->fetchAll();
 // PAGINATION
 
 // SECTION COMMENT PAGINATION
+// $commentsPerPage = 5;
+// $pageComments = isset($_GET['page_comments']) ? (int)$_GET['page_comments'] : 1;
+// $offsetComments = ($pageComments - 1) * $commentsPerPage;
+
+// Mengambil data komentar dari database
+// $stmt = $connection->prepare("SELECT * FROM comments ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
+// $stmt->bindValue(':offset', $offsetComments, PDO::PARAM_INT);
+// $stmt->bindValue(':commentsPerPage', $commentsPerPage, PDO::PARAM_INT);
+// $stmt->execute();
+// $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Mendapatkan total komentar untuk pagination
+// $totalComments = $connection->query("SELECT COUNT(*) FROM comments")->fetchColumn();
+// $totalPagesComments = ceil($totalComments / $commentsPerPage);
+// PAGINATION
+
+// SECTION COMMENT PAGINATION GUESTS
 $commentsPerPage = 5;
 $pageComments = isset($_GET['page_comments']) ? (int)$_GET['page_comments'] : 1;
 $offsetComments = ($pageComments - 1) * $commentsPerPage;
 
 // Mengambil data komentar dari database
-$stmt = $connection->prepare("SELECT * FROM comments ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
+$stmt = $connection->prepare("SELECT * FROM guests ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
 $stmt->bindValue(':offset', $offsetComments, PDO::PARAM_INT);
 $stmt->bindValue(':commentsPerPage', $commentsPerPage, PDO::PARAM_INT);
 $stmt->execute();
 $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Mendapatkan total komentar untuk pagination
-$totalComments = $connection->query("SELECT COUNT(*) FROM comments")->fetchColumn();
+$totalComments = $connection->query("SELECT COUNT(*) FROM guests")->fetchColumn();
 $totalPagesComments = ceil($totalComments / $commentsPerPage);
 
 // Menghapus komentar
 if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
-    $deleteStmt = $connection->prepare("DELETE FROM comments WHERE id = :id");
+    // $deleteStmt = $connection->prepare("DELETE FROM guests WHERE id = :id");
+    $deleteStmt = $connection->prepare("UPDATE guests SET notes = NULL WHERE id= :id");
     $deleteStmt->bindValue(':id', $deleteId, PDO::PARAM_INT);
     $deleteStmt->execute();
-    header("Location: dashboard_modern.php"); // Redirect untuk menghindari resubmit form
+    header("Location: dashboard_modern.php");
     exit();
 }
 // END SECTION COMMENT PAGINATION
@@ -414,19 +432,22 @@ if (isset($_POST['delete_id'])) {
                         <h1>Komentar</h1>
                         <?php if($totalComments > 0 ): ?>
                         <?php foreach ($comments as $comment): ?>
-                            <div class="comment">
-                                <span class="comment-name"><?php echo htmlspecialchars($comment['name']); ?></span>
-                                <div class="comment-wrap-item">
-                                    <div class="text-time">
-                                        <p class="comment-text"><?php echo nl2br(htmlspecialchars($comment['text'])); ?></p>
-                                        <p class="comment-time"><?php echo nl2br(htmlspecialchars($comment['created_at'])); ?></p>
+                            <?php if($comment['notes'] != null): ?>
+                                <div class="comment">
+                                    <span class="comment-name"><?php echo htmlspecialchars($comment['name']); ?></span>
+                                    <div class="comment-wrap-item">
+                                        <div class="text-time">
+                                            <p class="comment-text"><?php echo nl2br(htmlspecialchars($comment['notes'])); ?></p>
+                                            <p class="comment-time"><?php echo nl2br(htmlspecialchars($comment['created_at'])); ?></p>
+                                        </div>
+                                        <form method="POST" style="display:inline;">
+                                            <input type="hidden" name="delete_id" value="<?php echo $comment['id']; ?>">
+                                            <span class="delete-comment" onclick="this.closest('form').submit();">Hapus</span>
+                                        </form>
                                     </div>
-                                    <form method="POST" style="display:inline;">
-                                        <input type="hidden" name="delete_id" value="<?php echo $comment['id']; ?>">
-                                        <span class="delete-comment" onclick="this.closest('form').submit();">Hapus</span>
-                                    </form>
                                 </div>
-                            </div>
+                            <? else: ?>
+                            <?php endif;?>
                         <?php endforeach; ?>
 
                         <div class="pagination-comment">
