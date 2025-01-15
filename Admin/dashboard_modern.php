@@ -5,16 +5,10 @@ $connection = getConnection();
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
-    exit(); // Redirect ke halaman login jika admin belum login
+    exit();
 }
 $_SESSION['is_admin'] = true;
-// if(isset($_SESSION['valid_admin'])){
-//     header("Location: dashboard_admin.php");
-// }
-// Reset valid_code setelah digunakan (opsional)
-// dibawah error
-// $_SESSION['valid_admin']==true;
-// error diatas
+
 
 // Mengambil informasi admin berdasarkan user_id
 $sql = "SELECT * FROM users WHERE id = ?";
@@ -63,7 +57,6 @@ if (isset($_POST['export_guests'])) {
         fclose($output);
         exit();
     } catch (PDOException $e) {
-        // Menangani kesalahan jika query gagal
         echo "Error: " . $e->getMessage();
     }
 }
@@ -131,7 +124,7 @@ if (isset($_POST['import_guests'])) {
 }
 
 // Mengambil daftar tamu
-$sql = "SELECT * FROM guests ORDER BY created_at ASC";
+$sql = "SELECT * FROM guests WHERE confirm = 1 ORDER BY created_at ASC";
 $stmt = $connection->query($sql);
 $guests = $stmt->fetchAll();
 $guestsCount = count($guests); 
@@ -149,7 +142,6 @@ $guestsPresentCount = count($guestsPresent);
 // Menghitung jumlah tamu
 $guestsCount = count($guests);
 
-
 // Mendapatkan nilai pencarian dari input
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 // PAGINATION
@@ -161,7 +153,7 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 // Query untuk menghitung total tamu berdasarkan hasil pencarian pada beberapa kolom
-$sqlCount = "SELECT COUNT(*) AS total FROM guests WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR is_present LIKE ?";
+$sqlCount = "SELECT COUNT(*) AS total FROM guests WHERE (name LIKE ? OR email LIKE ? OR phone LIKE ? OR is_present LIKE ?)AND confirm = 1";
 $stmtCount = $connection->prepare($sqlCount);
 $searchTerm = '%' . $search . '%';
 $stmtCount->execute([$searchTerm, $searchTerm, $searchTerm, $searchTerm]);
@@ -169,7 +161,11 @@ $totalGuests = $stmtCount->fetchColumn();
 $totalPages = ceil($totalGuests / $limit);
 
 // Query untuk mendapatkan data tamu berdasarkan pencarian pada beberapa kolom dan halaman
-$sql = "SELECT * FROM guests WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR is_present LIKE ? ORDER BY created_at ASC LIMIT ? OFFSET ?";
+$sql = "SELECT * FROM guests 
+        WHERE (name LIKE ? OR email LIKE ? OR phone LIKE ? OR is_present LIKE ?) 
+        AND confirm = 1 
+        ORDER BY created_at ASC 
+        LIMIT ? OFFSET ?";
 $stmt = $connection->prepare($sql);
 $stmt->bindValue(1, $searchTerm, PDO::PARAM_STR);
 $stmt->bindValue(2, $searchTerm, PDO::PARAM_STR);
@@ -179,25 +175,6 @@ $stmt->bindValue(5, $limit, PDO::PARAM_INT);
 $stmt->bindValue(6, $offset, PDO::PARAM_INT);
 $stmt->execute();
 $guests = $stmt->fetchAll();
-
-// PAGINATION
-
-// SECTION COMMENT PAGINATION
-// $commentsPerPage = 5;
-// $pageComments = isset($_GET['page_comments']) ? (int)$_GET['page_comments'] : 1;
-// $offsetComments = ($pageComments - 1) * $commentsPerPage;
-
-// Mengambil data komentar dari database
-// $stmt = $connection->prepare("SELECT * FROM comments ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
-// $stmt->bindValue(':offset', $offsetComments, PDO::PARAM_INT);
-// $stmt->bindValue(':commentsPerPage', $commentsPerPage, PDO::PARAM_INT);
-// $stmt->execute();
-// $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Mendapatkan total komentar untuk pagination
-// $totalComments = $connection->query("SELECT COUNT(*) FROM comments")->fetchColumn();
-// $totalPagesComments = ceil($totalComments / $commentsPerPage);
-// PAGINATION
 
 // SECTION COMMENT PAGINATION GUESTS
 $commentsPerPage = 5;
@@ -218,7 +195,6 @@ $totalPagesComments = ceil($totalComments / $commentsPerPage);
 // Menghapus komentar
 if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
-    // $deleteStmt = $connection->prepare("DELETE FROM guests WHERE id = :id");
     $deleteStmt = $connection->prepare("UPDATE guests SET notes = NULL WHERE id= :id");
     $deleteStmt->bindValue(':id', $deleteId, PDO::PARAM_INT);
     $deleteStmt->execute();
@@ -278,17 +254,17 @@ if (isset($_POST['delete_id'])) {
                 <div class="dashboard">
                     <div class="card AllGuests">
                         <i class="fas fa-user-friends"></i>
-                        <h3>Total Tamu</h3>
+                        <h3>Keseluruhan Tamu yang konfirmasi akan hadir di acara</h3>
                         <h2><?= $guestsCount ?></h2>
                     </div>
                     <div class="card presentGuest">
                         <i class="fas fa-thumbs-up"></i>
-                        <h3>Total Tamu Hadir</h3>
+                        <h3>Tamu Yang Sudah Hadir</h3>
                         <h2><?= $guestsPresentCount ?></h2>
                     </div>
                     <div class="card comments">
                         <i class="fas fa-comment"></i>
-                        <h3>Comments</h3>
+                        <h3>Ucapan Selamat</h3>
                         <h2><?= $totalComments ?></h2>
                     </div>
                 </div>
@@ -363,9 +339,9 @@ if (isset($_POST['delete_id'])) {
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($guests as $guest): ?>
+                    <?php $counter = 1; foreach ($guests as $guest): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($guest['id']); ?></td>
+                            <td><?= $counter++; ?></td>
                             <td><?php echo htmlspecialchars($guest['name']); ?></td>
                             <td><?php echo htmlspecialchars($guest['email']); ?></td>
                             <td><?php echo htmlspecialchars($guest['phone']); ?></td>
@@ -418,7 +394,7 @@ if (isset($_POST['delete_id'])) {
                                 <p id="confirmation-message"></p>
                                 <div class="confirm-wrapping">
                                     <button id="confirm-button">Ya, Proses Data</button>
-                                    <button id="cancel-button">Tidak, Batalkan</button>
+                                    <button id="cancel-modal">Tidak, Batalkan</button>
                                 </div>
                             </div>
                         </div>
@@ -484,12 +460,11 @@ if (isset($_POST['delete_id'])) {
             </div>
         </div>
     </div>
-    <!-- <script src="assets/javascript/dashboard-comment.js"></script> -->
     <script src="assets/javascript/dashboard.js"></script>
     <script src="assets/javascript/dashboard-modal-import.js"></script>
     <script src="assets/javascript/dashboard-addGuest.js"></script>
     <script src="assets/javascript/dashboard-router.js"></script>
-    <script src="./assets/javascript/registration-view.js"></script>
+    <!-- <script src="./assets/javascript/registration-view.js"></script> -->
 </body>
 
 </html>

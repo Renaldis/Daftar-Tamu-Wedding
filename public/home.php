@@ -1,17 +1,43 @@
 <?php
 session_start();
 
-// Cek jika ada parameter 'code-rsvp' dalam URL
-if(isset($_POST['code-rsvp'])){
-    $code = $_POST['code-rsvp'];
-    if($code == '123456'){
-      // Simpan data ke sesi untuk digunakan di registration-view.php
-      $_SESSION['valid_code'] = true;
-        header('Location: registration-view.php');
-        exit();
-    } else {
-      echo "<p>Salah Input Code RSVP</p>";
-    }
+require_once __DIR__ . "/../Config/db.php";
+$conn = getConnection();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_POST['code-rsvp'])) {
+      $code_rsvp = trim($_POST['code-rsvp']);
+
+      try {
+          // Koneksi ke database
+          $pdo = getConnection();
+          if (!$pdo) {
+              throw new Exception("Koneksi ke database gagal.");
+          }
+
+          // Query untuk mengecek kode RSVP
+          $stmt = $pdo->prepare("SELECT * FROM guests WHERE code_rsvp = :code_rsvp");
+          $stmt->bindParam(':code_rsvp', $code_rsvp, PDO::PARAM_STR);
+          $stmt->execute();
+
+          if ($stmt->rowCount() > 0) {
+            $guest = $stmt->fetch(PDO::FETCH_ASSOC);
+            $_SESSION['guest_data'] = $guest;
+            $_SESSION['code-rsvp'] = $code_rsvp;
+            $_SESSION['valid_code'] = true;
+            header("Location: registration-view.php");
+            exit();
+        } else {
+            echo "<script>alert('Kode RSVP tidak ditemukan. Mohon periksa kembali.');</script>";
+            echo "<p class='error'>Kode RSVP tidak ditemukan. Mohon periksa kembali.</p>";
+        }
+      } catch (PDOException $e) {
+          echo "Terjadi kesalahan pada sistem: " . $e->getMessage();
+          exit();
+      }
+  } else {
+      echo "Kode RSVP tidak diinputkan.";
+  }
 }
     // Hapus session sebelumnya
     if(isset($_SESSION['guest_data'])){
@@ -19,6 +45,7 @@ if(isset($_POST['code-rsvp'])){
       unset($_SESSION['guest_data']);
       exit();
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -181,15 +208,6 @@ if(isset($_POST['code-rsvp'])){
     <!-- COMMENTS -->
     <section id="comments" class="comments">
       <h1>Your Warmest Wishes</h1>
-          <!-- <form method="POST" action="../Model/post_comment.php">
-            <div class="form-group">
-              <input type="text" name="name" placeholder="Name" required>
-            </div>
-            <div class="form-group">
-              <textarea name="text" placeholder="Say something..." required></textarea>
-            </div>
-            <button type="submit">Post Comment</button>
-          </form> -->
       <div id="comment-list">
         <!-- Komentar yang ada akan ditampilkan di sini -->
         <?php

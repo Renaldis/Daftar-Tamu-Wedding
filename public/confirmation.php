@@ -12,6 +12,12 @@ if (isset($_SESSION['guest_data'])) {
     header("Location: home.php");
     exit();
 }
+$confirmation = null;
+if($guest['confirm']){
+    $confirmation == "Hadir";
+} else{
+    $confirmation == "Tidak Hadir";
+}
 
 ?>
 <!DOCTYPE html>
@@ -33,6 +39,7 @@ if (isset($_SESSION['guest_data'])) {
             <p><strong>Telepon:</strong> <?= htmlspecialchars($guest['phone']) ?></p>
             <p><strong>Jumlah Tamu:</strong> <?= htmlspecialchars($guest['guests_count']) ?></p>
             <p><strong>Catatan:</strong> <?= htmlspecialchars($guest['notes']) ?></p>
+            <p><strong>Konfirmasi kehadiran:</strong> <?= htmlspecialchars($guest['confirm']) ? "Hadir" : "Tidak Hadir" ?></p>
             <p><strong>Information:</strong> Data anda sudah tersimpan. saat di resepsionis tinggal beritahukan nama lengkap anda</p>
         </div>
         <button onclick="window.location.href='home.php';">Kembali ke Beranda</button>

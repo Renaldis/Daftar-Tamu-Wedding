@@ -1,8 +1,8 @@
 <?php
-include 'config.php'; // Pastikan config.php berisi detail koneksi yang benar
+include 'config.php';
 
 function getConnection() {
-    global $host, $db, $user, $pass; // Memanggil variabel dari config.php
+    global $host, $db, $user, $pass;
 
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -10,7 +10,7 @@ function getConnection() {
         return $pdo;
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
-        return null; // Apabila gagal, kembalikan null
+        return null; 
     }
 }
 ?>

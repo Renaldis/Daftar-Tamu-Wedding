@@ -4,7 +4,7 @@ $connection = getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $name = $_POST['name'];
 
     // Mencegah username yang sama
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi Admin</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">

@@ -1,0 +1,37 @@
+@startuml usecasediagram
+left to right direction
+
+actor User as "Admin"
+actor Guest
+
+rectangle "System" {
+    (Register)
+    (Login)
+    (Delete All Guests)
+    (Delete Guest)
+    (Edit Guest)
+    (View Total Guests)
+    (View RSVP Guests)
+    (Add Guest)
+    (View Comments)
+    (Delete Comment)
+    (Fill RSVP)
+    (Submit RSVP)
+}
+
+User  --> (Register)
+User  --> (Login)
+User  --> (Delete All Guests)
+User  --> (Delete Guest)
+User  --> (Edit Guest)
+User  --> (View Total Guests)
+User  --> (View RSVP Guests)
+User  --> (Add Guest)
+User  --> (View Comments)
+User  --> (Delete Comment)
+
+Guest --> (Fill RSVP)
+Guest --> (Submit RSVP)
+Guest --> (View Comments)
+
+@enduml

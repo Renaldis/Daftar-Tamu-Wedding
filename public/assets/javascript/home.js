@@ -1,18 +1,16 @@
 // untuk membuat navbar item icon nya aktif tergantung dari scrollan
 
 window.addEventListener("scroll", function () {
-  const sections = document.querySelectorAll("section"); // Ambil semua elemen section
-  const navLinks = document.querySelectorAll(".navbar a"); // Ambil semua link di navbar
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".navbar a");
 
   sections.forEach((section) => {
     const rect = section.getBoundingClientRect();
-    // Jika bagian tersebut dalam jendela viewport
     if (rect.top >= 0 && rect.top < window.innerHeight) {
       navLinks.forEach((link) => {
-        link.classList.remove("active"); // Hapus aktif dari semua link
-        // Cek ID dari bagian yang dilihat
+        link.classList.remove("active");
         if (link.getAttribute("href") === `#${section.id}`) {
-          link.classList.add("active"); // Menambahkan aktif untuk link
+          link.classList.add("active");
         }
       });
     }
@@ -34,7 +32,7 @@ startButton.onclick = function () {
 
 stopButton.onclick = function () {
   music.pause();
-  music.currentTime = 0; // Set waktu ke awal
+  music.currentTime = 0;
   startButton.classList.remove("hide");
   stopButton.classList.add("hide");
 };
@@ -47,15 +45,13 @@ music.addEventListener("play", function () {
 });
 // music control
 
-// Countdown Timer
-// Countdown Timer
 // Set tanggal target untuk countdown
 const weddingDate = new Date("December 31, 2024 19:30:00").getTime();
 
 // Update countdown setiap 1 detik
 const countdownFunction = setInterval(function () {
-  const now = new Date().getTime(); // Waktu sekarang
-  const distance = weddingDate - now; // Selisih waktu
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
 
   // Perhitungan waktu
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -77,6 +73,6 @@ const countdownFunction = setInterval(function () {
     document.querySelector(".countdown-timer").innerHTML =
       "The event has started!";
   }
-}, 1000); // Memperbarui setiap detik
+}, 1000);
 
 // Countdown Timer

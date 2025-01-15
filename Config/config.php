@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $db = 'wedding_db';
-$user = 'root'; // Ganti dengan username MySQL Anda
-$pass = ''; // Ganti dengan password MySQL Anda
+$user = 'root'; 
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);

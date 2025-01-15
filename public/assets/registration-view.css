@@ -2,15 +2,10 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  /* Hapus padding agar center bisa berfungsi dengan baik */
   height: 100vh;
-  /* Biarkan body mengambil 100% tinggi viewport */
   display: flex;
-  /* Gunakan Flexbox untuk memusatkan */
   justify-content: center;
-  /* Pusatkan secara horizontal */
   align-items: center;
-  /* Pusatkan secara vertikal */
   background-color: #f9f9f9;
   background: url(../assets/img/bg-rsvp.jpg);
   background-repeat: no-repeat;
@@ -93,24 +88,15 @@ textarea:focus {
 
 .modal-content {
   background-color: #fefefe;
-  /* Warna latar belakang */
   margin: auto;
-  /* Otomatis menggunakan margin untuk centering */
   padding: 20px;
   border: 1px solid #888;
-  /* Border */
   width: 80%;
-  /* Lebar modal */
   max-width: 500px;
-  /* Atur lebar maksimum */
   border-radius: 10px;
-  /* Sudut melengkung */
   position: relative;
-  /* Untuk efek positioning */
   top: 50%;
-  /* Posisikan dari atas */
   transform: translateY(-50%);
-  /* Mengangkat modal kembali setengah tinggi modal */
 }
 
 .confirm-wrapping {

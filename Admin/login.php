@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['is_admin'] = $user['is_admin'];
-        header("Location: dashboard_modern.php"); // Redirect ke dashboard setelah login
+        header("Location: dashboard_modern.php");
         exit();
     } else {
         $error_message = "Login gagal! Silakan periksa username dan password Anda.";
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">

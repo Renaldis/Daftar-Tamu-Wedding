@@ -1,5 +1,5 @@
 function confirmSubmission(event) {
-  event.preventDefault(); // Mencegah pengiriman form
+  event.preventDefault();
 
   // Ambil nilai dari form
   const name = document.querySelector('input[name="name"]').value;
@@ -25,17 +25,17 @@ function confirmSubmission(event) {
 
   // Tampilkan pesan konfirmasi di modal
   document.getElementById("confirmation-message").innerHTML = message;
-  document.getElementById("confirmation-modal").style.display = "block"; // Tampilkan modal
+  document.getElementById("confirmation-modal").style.display = "block";
 }
 
 // Fungsi untuk menutup modal
 function closeModal() {
-  document.getElementById("confirmation-modal").style.display = "none"; // Sembunyikan modal
+  document.getElementById("confirmation-modal").style.display = "none";
 }
 
 // Fungsi untuk memproses form saat konfirmasi
 function processForm() {
-  document.getElementById("registration-form").submit(); // Kirim form jika dikonfirmasi
+  document.getElementById("registration-form").submit();
 
   const formRsvp = document.querySelector(".formulir-rsvp");
   const mainDashboard = document.querySelector(".main-dashboard");
@@ -49,5 +49,6 @@ window.onload = function () {
 
   // Menangani aksi setiap tombol
   document.getElementById("cancel-button").onclick = closeModal;
+  document.getElementById("cancel-modal").onclick = closeModal;
   document.getElementById("confirm-button").onclick = processForm;
 };

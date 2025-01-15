@@ -1,5 +1,5 @@
 function confirmSubmission(event) {
-  event.preventDefault(); // Mencegah pengiriman form
+  event.preventDefault();
 
   // Ambil nilai dari form
   const name = document.querySelector('input[name="name"]').value;
@@ -9,15 +9,18 @@ function confirmSubmission(event) {
     'input[name="guests_count"]'
   ).value;
   const notes = document.querySelector('textarea[name="notes"]').value;
+  const confirm = document.querySelector('input[name="confirm"]').checked; // Ambil status checkbox
 
   // Buat pesan konfirmasi
-  const message =
-    `<p>Apakah data Anda sudah benar?</p>` +
-    `<p>Nama: ${name}</p>` +
-    `<p>Email: ${email}</p>` +
-    `<p>Telepon: ${phone}</p>` +
-    `<p>Jumlah Tamu: ${guestsCount}</p>` +
-    `<p>Catatan: ${notes}`;
+  const message = `
+    <p>Apakah data Anda sudah benar?</p>
+    <p>Nama: ${name}</p>
+    <p>Email: ${email}</p>
+    <p>Telepon: ${phone}</p>
+    <p>Jumlah Tamu: ${guestsCount}</p>
+    <p>Catatan: ${notes}</p>
+    <p>Konfirmasi Kehadiran: ${confirm ? "Ya" : "Tidak"}</p>
+  `;
 
   // Tampilkan pesan konfirmasi di modal
   document.getElementById("confirmation-message").innerHTML = message;
