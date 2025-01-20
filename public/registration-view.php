@@ -47,11 +47,26 @@ try {
 <div class="formulir-rsvp">
 <h1>Pendaftaran Tamu</h1>
     <form id="registration-form" action="../Model/registration.php" method="POST" onsubmit="confirmSubmission(event);">
+    <div>
+        <label style="margin-left: 50px;">Nama Lengkap:</label>
         <input type="text" name="name" value="<?= htmlspecialchars($guest['name']) ?>" placeholder="Nama Lengkap" required maxlength="50">
+    </div>
+    <div>
+        <label style="margin-left: 50px;">Email :</label>
         <input type="email" name="email" value="<?= htmlspecialchars($guest['email']) ?>" placeholder="Alamat Email" required maxlength="50">
+    </div>
+    <div>
+        <label style="margin-left: 50px;">No Telpon :</label>
         <input type="text" name="phone" value="<?= htmlspecialchars($guest['phone']) ?>" placeholder="Nomor Telepon" maxlength="15" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    </div>
+    <div>
+        <label style="margin-left: 50px;">Jumlah Tamu yang dibawa :</label>
         <input type="number" name="guests_count" value="<?= htmlspecialchars($guest['guests_count']) ?>" placeholder="Jumlah Tamu yang Dibawa (opsional)" maxlength="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    </div>
+    <div>
+        <label style="margin-left: 50px;">Ucapan Selamat :</label>
         <textarea name="notes" placeholder="Ucapan Selamat (opsional)"><?= htmlspecialchars($guest['notes']) ?></textarea>
+    </div>
         <!-- Checkbox Konfirmasi -->
         <table style="margin-left: 50px;">
             <tr>
@@ -61,8 +76,8 @@ try {
         </table>
         <blockquote>*<strong>Notes:</strong> Ucapan selamat akan ditampilkan di halaman utama</blockquote>
         
-        <div>
-            <button type="submit">Kirim</button>
+        <div class="buttonContainer">
+            <button class="buttonSubmit" type="submit">Kirim</button>
         </div>
     </form>
     <!-- Modal Konfirmasi -->

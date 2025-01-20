@@ -73,12 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <!-- Navbar -->
   <nav class="navbar">
     <ul>
-      <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+      <li><a href="index.html"><i class="fas fa-home"></i>Beranda</a></li>
     </ul>
-    <li><a href="#couple"><i class="fas fa-heart"></i>Couple</a></li>
-    <li><a href="#information"><i class="fas fa-calendar-alt"></i>Events</a></li>
-    <li><a href="#rsvp"><i class="fas fa-envelope"></i>Invitation</a></li>
-    <li><a href="#comments"><i class="fas fa-comments"></i>Comments</a></li>
+    <li><a href="#couple"><i class="fas fa-heart"></i>Pasangan</a></li>
+    <li><a href="#information"><i class="fas fa-calendar-alt"></i>Acara</a></li>
+    <li><a href="#rsvp"><i class="fas fa-envelope"></i>Undangan</a></li>
+    <li><a href="#comments"><i class="fas fa-comments"></i>Ucapan Selamat</a></li>
   </nav>
   <!-- Navbar -->
 
@@ -86,20 +86,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Content -->
     <section class="content">
       <h1>Assalamualaikum Wr. Wb</h1>
-      <p>By love and the grace of love, we cordially invite you to attend the Wedding Celebration of</p>
+      <p>Dengan penuh cinta dan kasih karunia, kami dengan hormat mengundang Anda untuk menghadiri Perayaan Pernikahan kami.</p>
     </section>
     <section id="couple">
       <div class="groom-bride-section">
         <img alt="Background image of the groom and bride" class="wedding-image" src="assets/img/womenNman.jpeg"
           width="1200" />
         <div class="overlay">
-          <h2>Groom and Bride</h2>
+          <h2>Pengantin Pria dan Wanita</h2>
           <div class="profile-wrap">
             <div class="profile">
               <img alt="Groom's profile picture" src="assets/img/man.jpeg" />
-              <h3>M Fiqri Anies BBA. MoC</h3>
-              <p>Son of Mr. M Anies Hasan & Mrs Eva Elisa Wibisono</p>
-              <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
+              <h3>M Fiqri Anies</h3>
+              <p>Putra dari Bapak Muhammad Fauzan dan Ibu Ratna Dewi Kusuma.</p>
+              <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@Fiqri Anies</a>
             </div>
             <div class="profile and">
               <span>&</span>
@@ -107,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="profile">
               <img alt="Bride's profile picture" src="assets/img/women.jpeg" />
               <h3>Meiliza Dwi Putri S.E</h3>
-              <p>Daughter of Mr. Nirwan Iskandar (Alm) & Mrs Elivo Nasution</p>
-              <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@renaldiisptr</a>
+              <p>Putri tercinta dari Bapak Nirwan Iskandar dan Ibu Elivo Nasution.</p>
+              <a href="" target="_blank"><i class="fab fa-instagram fa-fw"></i>@Meiliza</a>
             </div>
           </div>
         </div>
@@ -119,38 +119,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Information -->
     <section id="information" class="information">
-      <h2>Save The Date</h2>
-      <h3 class="saturday">Tuesday</h3>
+      <h2>Catat Tanggal</h2>
+      <h3 class="saturday">Selasa</h3>
       <div class="dates">
-        <p class="date">31</p>
-        <p class="month">Desember<br>2024</p>
+        <p class="date">21</p>
+        <p class="month">Januari<br>2025</p>
       </div>
       <div class="information-wrapping">
         <article class="event">
           <h2 class="title">Akad</h2>
           <p class="time">09:30 - 11:00 <span>WIB</span></p>
           <button onclick="window.open('https://calendar.app.google/XxHeHqAhkWJqhgx26', '_blank');"><i
-              class="fas fa-calendar-alt"></i> Add to Calendar</button>
+              class="fas fa-calendar-alt"></i> Tambah ke Kalender</button>
         </article>
         <article class="event">
-          <h2 class="title">Reception</h2>
+          <h2 class="title">Resepsi</h2>
           <p class="time">12:00 - 14:30 <span>WIB</span></p>
           <button onclick="window.open('https://calendar.app.google/jmEKWWNQFWVKaNZH6', '_blank');"><i
-              class="fas fa-calendar-alt"></i> Add to Calendar</button>
+              class="fas fa-calendar-alt"></i> Tambah ke Kalender</button>
         </article>
         <article class="event">
-          <h2 class="title">Wedding Celebration</h2>
+          <h2 class="title">Perayaan Pernikahan</h2>
           <h3>DRESS CODE : COCKTAIL ATTIRE</h3>
           <p class="time">19:30 - 22:00 <span>WIB</span></p>
           <button onclick="window.open('https://calendar.app.google/HzuhBo1Jm62LA3EC9', '_blank');"><i
-              class="fas fa-calendar-alt"></i> Add to Calendar</button>
+              class="fas fa-calendar-alt"></i> Tambah ke Kalender</button>
         </article>
         <article class="location">
           <h2>The St. Regis Jakarta</h2>
           <p>Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi</p>
           <p>Kota Jakarta Selatan</p>
           <button onclick="window.open('https://maps.google.com/?cid=8982988377651589278', '_blank');"><i
-              class="fas fa-map-marker-alt"></i> View Map</button>
+              class="fas fa-map-marker-alt"></i> Lihat Peta</button>
         </article>
       </div>
     </section>
@@ -174,16 +174,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section id="rsvp">
       <article class="rsvp">
         <h1>RSVP</h1>
-        <p>Put your 6 digits invitation code</p>
+        <p>Masukkan kode undangan 6 digit Anda</p>
         <form method="post" class="rsvpButton">
-          <input type="text" placeholder="Invitation Code" name="code-rsvp" required minlength="6">
+          <input type="text" placeholder="Kode RSVP" name="code-rsvp" required minlength="6">
           <button type="submit">RSVP</button>
 
         </form>
 
       </article>
       <article class="countdown-wrapping countdown">
-        <h2>Desember 31<sup>th</sup>, 2024</h2>
+        <h2>21 Januari 2025</h2>
         <div class="countdown-timer">
         <div>
             <span id="days">0</span>
@@ -207,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- RSVP -->
     <!-- COMMENTS -->
     <section id="comments" class="comments">
-      <h1>Your Warmest Wishes</h1>
+      <h1>Harapan Terhangat Anda</h1>
       <div id="comment-list">
         <!-- Komentar yang ada akan ditampilkan di sini -->
         <?php

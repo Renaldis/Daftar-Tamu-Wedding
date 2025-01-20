@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Edit Tamu</h1>
         <form method="POST" class="form">
             <input class="input-edit" type="text" name="name" placeholder="Nama" value="<?php echo htmlspecialchars($guest['name']); ?>" required>
-            <input class="input-edit" type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($guest['email']); ?>" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input class="input-edit" type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($guest['email']); ?>">
             <input class="input-edit" type="text" name="phone" placeholder="No Telpon" value="<?php echo htmlspecialchars($guest['phone']); ?>" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <input type="checkbox" name="is_present" value="1" <?php echo $guest['is_present'] ? 'checked' : ''; ?>>
             <label>Hadir</label>

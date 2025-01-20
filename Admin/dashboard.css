@@ -189,6 +189,11 @@ body {
   color: #004085;
 }
 
+.main-dashboard .dashboard .card.AllGuestsNotPresent {
+  background-color: #fac8c8;
+  color: #850000;
+}
+
 .main-dashboard .dashboard .card.presentGuest {
   background-color: #fff3cd;
   color: #856404;
@@ -211,10 +216,12 @@ body {
   width: 100%;
   border-collapse: collapse;
 }
+
 .main-dashboard .recent-activity h1 {
   text-align: center;
   opacity: 0.5;
 }
+
 .main-dashboard .recent-activity table th,
 .main-dashboard .recent-activity table td {
   padding: 10px;

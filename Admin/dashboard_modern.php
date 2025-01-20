@@ -33,24 +33,26 @@ if (isset($_POST['export_guests'])) {
         header('Content-Disposition: attachment; filename="guests.csv"');
 
         // Query untuk mendapatkan data lengkap tamu
-        $stmt = $connection->query("SELECT name, email, phone, guests_count, notes, is_present, created_at FROM guests ORDER BY created_at ASC");
+        $stmt = $connection->query("SELECT code_rsvp, name, email, phone, guests_count, notes, is_present,confirm, created_at FROM guests ORDER BY created_at ASC");
         $guests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Output header CSV
         $output = fopen("php://output", "w");
-        fputcsv($output, ["No", "Nama", "Email", "No Telpon", "Jumlah Tamu", "Catatan", "Kehadiran", "Tanggal Ditambahkan"]); // Header CSV
+        fputcsv($output, ["No","Kode RSVP", "Nama", "Email", "No Telpon", "Jumlah Tamu", "Catatan", "Kehadiran", "Konfirmasi" ,"Tanggal Ditambahkan"]); // Header CSV
 
         // Output baris tamu dengan nomor urut
         $no = 1;
         foreach ($guests as $guest) {
             fputcsv($output, [
                 $no++,
+                $guest['code_rsvp'],
                 $guest['name'],
                 $guest['email'],
                 $guest['phone'],
                 $guest['guests_count'],
                 $guest['notes'],
                 $guest['is_present'],
+                $guest['confirm'],
                 $guest['created_at']
             ]);
         }
@@ -76,15 +78,17 @@ if (isset($_POST['import_guests'])) {
 
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     // Ekstraksi data
-                    $name = $data[1] ?? '';
-                    $email = $data[2] ?? '';
-                    $phone = $data[3] ?? '';
-                    $guests_count = isset($data[4]) ? $data[4] : 0;
-                    $notes = $data[5] ?? '';
-                    $is_present = $data[6] ?? 0;
+                    $code_rsvp = $data[1] ?? '';
+                    $name = $data[2] ?? '';
+                    $email = $data[3] ?? '';
+                    $phone = $data[4] ?? '';
+                    $guests_count = isset($data[5]) ? $data[5] : 0;
+                    $notes = $data[6] ?? '';
+                    $is_present = $data[7] ?? 0;
+                    $confirm = $data[8] ?? 0;
 
                     // Validasi dan format tanggal dari dd/mm/yyyy hh:mm:ss ke yyyy-mm-dd hh:mm:ss
-                    $dateTime = !empty($data[7]) ? explode(' ', $data[7]) : null;
+                    $dateTime = !empty($data[9]) ? explode(' ', $data[9]) : null;
                     if ($dateTime) {
                         $date = $dateTime[0]; // Bagian tanggal
                         $time = $dateTime[1] ?? '00:00:00'; // Bagian waktu (atau default ke 00:00:00)
@@ -103,10 +107,10 @@ if (isset($_POST['import_guests'])) {
 
                     // Memasukkan data ke database
                     if (!empty($name) && !empty($email) && !empty($phone)) {
-                        $sql = "INSERT INTO guests (name, email, phone, guests_count, notes, is_present, created_at) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?)";
+                        $sql = "INSERT INTO guests (code_rsvp, name, email, phone, guests_count, notes, is_present, confirm, created_at) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         $stmt = $connection->prepare($sql);
-                        $stmt->execute([$name, $email, $phone, $guests_count, $notes, $is_present, $created_at]);
+                        $stmt->execute([$code_rsvp, $name, $email, $phone, $guests_count, $notes, $is_present,$confirm, $created_at]);
                     }
                 }
                 fclose($handle);
@@ -123,24 +127,37 @@ if (isset($_POST['import_guests'])) {
     }
 }
 
-// Mengambil daftar tamu
+// Mengambil daftar tamu yang konfirmasi hadir
 $sql = "SELECT * FROM guests WHERE confirm = 1 ORDER BY created_at ASC";
 $stmt = $connection->query($sql);
-$guests = $stmt->fetchAll();
-$guestsCount = count($guests); 
+$guestsConfirm = $stmt->fetchAll();
+$guestsCountConfirm = count($guestsConfirm); 
 
-if($guestsCount ==0){
-    $resetId = "ALTER TABLE guests AUTO_INCREMENT = 1";
-    $connection->exec($resetId);
-}
+// Mengambil daftar tamu yang konfirmasi hadir
+$sql = "SELECT * FROM guests WHERE confirm = 0 ORDER BY created_at ASC";
+$stmt = $connection->query($sql);
+$guestsNotConfirm = $stmt->fetchAll();
+$guestsCountNotConfirm = count($guestsNotConfirm); 
 
+
+
+// Mengambil daftar tamu yang sudah hadir
 $sqlPresent = "SELECT * FROM guests WHERE is_present = 1 ORDER BY created_at ASC";
 $stmt = $connection->query($sqlPresent);
 $guestsPresent = $stmt->fetchAll();
 $guestsPresentCount = count($guestsPresent);
 
 // Menghitung jumlah tamu
-$guestsCount = count($guests);
+$sqlRSVP = "SELECT * FROM guests ORDER BY created_at ASC";
+$stmt = $connection->query($sqlRSVP);
+$guestsRSVP = $stmt->fetchAll();
+$guestsCountRSVP = count($guestsRSVP);
+
+if($guestsCountRSVP ==0){
+    $resetId = "ALTER TABLE guests AUTO_INCREMENT = 1";
+    $connection->exec($resetId);
+}
+
 
 // Mendapatkan nilai pencarian dari input
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -182,16 +199,17 @@ $pageComments = isset($_GET['page_comments']) ? (int)$_GET['page_comments'] : 1;
 $offsetComments = ($pageComments - 1) * $commentsPerPage;
 
 // Mengambil data komentar dari database
-$stmt = $connection->prepare("SELECT * FROM guests ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
+$stmt = $connection->prepare("SELECT * FROM guests WHERE notes != '' ORDER BY created_at DESC LIMIT :offset, :commentsPerPage");
 $stmt->bindValue(':offset', $offsetComments, PDO::PARAM_INT);
 $stmt->bindValue(':commentsPerPage', $commentsPerPage, PDO::PARAM_INT);
 $stmt->execute();
 $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Mendapatkan total komentar untuk pagination
-$totalComments = $connection->query("SELECT COUNT(*) FROM guests")->fetchColumn();
-$totalPagesComments = ceil($totalComments / $commentsPerPage);
 
+
+// Mendapatkan total komentar untuk pagination
+$totalComments = $connection->query("SELECT COUNT(*) FROM guests WHERE notes != ''")->fetchColumn();
+$totalPagesComments = ceil($totalComments / $commentsPerPage);
 // Menghapus komentar
 if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
@@ -231,8 +249,8 @@ if (isset($_POST['delete_id'])) {
             </div>
             <ul class="menu">
                 <li><a class="active" href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-user-plus"></i> Add New Guest</a></li>
-                <li><a href="#"><i class="fas fa-comments"></i> Comments</a></li>
+                <li><a href="#"><i class="fas fa-user-plus"></i> Tambah Tamu Baru</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Ucapan Selamat</a></li>
             </ul>
             <button class="btn green" id="logout-button">Logout</button>
         </div>
@@ -240,8 +258,8 @@ if (isset($_POST['delete_id'])) {
             <div class="header">
                 <div class="header-item">
                     <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search here..." />
+                        <!-- <i class="fas fa-search"></i> -->
+                        <!-- <input type="text" placeholder="Search here..." /> -->
                     </div>
                     <div class="profile">
                         <h3><?= htmlspecialchars($admin['name']) ?></h3>
@@ -254,12 +272,22 @@ if (isset($_POST['delete_id'])) {
                 <div class="dashboard">
                     <div class="card AllGuests">
                         <i class="fas fa-user-friends"></i>
-                        <h3>Keseluruhan Tamu yang konfirmasi akan hadir di acara</h3>
-                        <h2><?= $guestsCount ?></h2>
+                        <h3>Jumlah Tamu Diundang</h3>
+                        <h2><?= $guestsCountRSVP ?></h2>
+                    </div>
+                    <div class="card AllGuests">
+                        <i class="fas fa-user-friends"></i>
+                        <h3>Jumlah Tamu yang Mengonfirmasi bisa hadir pada RSVP</h3>
+                        <h2><?= $guestsCountConfirm ?></h2>
+                    </div>
+                    <div class="card AllGuestsNotPresent">
+                        <i class="fas fa-user-friends"></i>
+                        <h3>Jumlah Tamu yang Mengonfirmasi tidak bisa hadir pada RSVP</h3>
+                        <h2><?= $guestsCountNotConfirm?></h2>
                     </div>
                     <div class="card presentGuest">
                         <i class="fas fa-thumbs-up"></i>
-                        <h3>Tamu Yang Sudah Hadir</h3>
+                        <h3>Tamu yang telah Hadir di Acara</h3>
                         <h2><?= $guestsPresentCount ?></h2>
                     </div>
                     <div class="card comments">
@@ -271,7 +299,7 @@ if (isset($_POST['delete_id'])) {
                 <div class="recent-activity">
                     <div class="topbar">
                         <div class="top">
-                            <h3>Recent Activity</h3>
+                            <h3>Daftar Tamu</h3>
                             <form method="GET" action="">
                             <div class="search-data">
                                 <i class="fas fa-search"></i>
@@ -302,7 +330,7 @@ if (isset($_POST['delete_id'])) {
                             <!-- Bagian form impor CSV -->
                                 <button class="btn greenLight" id="button-import">Import</button>
                             <!-- Mengubah form untuk ekspor tamu -->
-                            <?php if ($guestsCount > 0): ?>
+                            <?php if ($guestsCountConfirm > 0): ?>
                                 <form method="POST" class="form">
                                     <button class="btn greenLight" type="submit" name="export_guests" value="Ekspor menjadi CSV">Export</button>
                                 </form>
@@ -311,7 +339,7 @@ if (isset($_POST['delete_id'])) {
                                     <button class="btn greenLight" type="submit" name="export_guests" value="Ekspor menjadi CSV" disabled>Export</button>
                                 </form>
                             <?php endif; ?>
-                            <?php if($guestsCount > 0): ?>
+                            <?php if($guestsCountConfirm > 0): ?>
                             <form method="POST" class="form">
                             <button class="btn greenLight" type="submit" name="delete_all_guests" value="Hapus Semua Tamu" onclick="return confirm('Apakah Anda yakin ingin menghapus semua tamu?');">
                                     Delete All</button>
@@ -324,7 +352,7 @@ if (isset($_POST['delete_id'])) {
                             <?php endif?>
                         </div>
                     </div>
-                    <?php if($guestsCount>0):?>
+                    <?php if($guestsCountConfirm>0):?>
                     <table>
                     <thead>
                         <tr>
@@ -383,7 +411,7 @@ if (isset($_POST['delete_id'])) {
                             <input type="email" name="email" placeholder="Alamat Email" required maxlength="50">
                             <input type="text" name="phone" placeholder="Nomor Telepon" maxlength="15" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             <input type="number" name="guests_count" placeholder="Jumlah Tamu yang Dibawa" maxlength="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                            <textarea name="notes" placeholder="Ucapan Selamat"></textarea>
+                            <!-- <textarea name="notes" placeholder="Ucapan Selamat"></textarea> -->
                             <button type="submit">Kirim</button>
                         </form>
                 <!-- Modal Konfirmasi -->
@@ -404,11 +432,11 @@ if (isset($_POST['delete_id'])) {
                 <!-- SECTION ADD NEW GUESTS -->
                 <!-- SECTION COMMENT -->
                 <section id="comment" class="d-none">
-                    <div class="comment-wrapping">
-                        <h1>Komentar</h1>
-                        <?php if($totalComments > 0 ): ?>
+                <div class="comment-wrapping">
+                    <h1>Ucapan Selamat</h1>
+                    <?php if($totalComments > 0 ): ?>
                         <?php foreach ($comments as $comment): ?>
-                            <?php if($comment['notes'] != null): ?>
+                            <?php if(!empty($comment['notes'])): ?>
                                 <div class="comment">
                                     <span class="comment-name"><?php echo htmlspecialchars($comment['name']); ?></span>
                                     <div class="comment-wrap-item">
@@ -422,28 +450,27 @@ if (isset($_POST['delete_id'])) {
                                         </form>
                                     </div>
                                 </div>
-                            <? else: ?>
-                            <?php endif;?>
+                            <?php endif; ?>
                         <?php endforeach; ?>
-
+            
                         <div class="pagination-comment">
                             <?php if ($pageComments > 1): ?>
                                 <a href="?page_comments=<?php echo $pageComments - 1; ?>">Prev</a>
                             <?php endif; ?>
-
+            
                             <?php for ($i = 1; $i <= $totalPagesComments; $i++): ?>
                                 <a href="?page_comments=<?php echo $i; ?>" style="<?php echo $i === $pageComments ? 'font-weight: bold;' : ''; ?>"><?php echo $i; ?></a>
                             <?php endfor; ?>
-
+            
                             <?php if ($pageComments < $totalPagesComments): ?>
                                 <a href="?page_comments=<?php echo $pageComments + 1; ?>">Next</a>
                             <?php endif; ?>
-                            <?php else: ?>
-                            <h3>Belum ada Komentar tersedia.</h3>
-                            <?php endif;?>
                         </div>
-                    </div>
-                </section>
+                    <?php else: ?>
+                        <h3>Belum ada Ucapan Selamat tersedia.</h3>
+                    <?php endif; ?>
+                </div>
+            </section>
                 <!-- SECTION COMMENT -->
             </main>
             <!-- Modal Konfirmasi -->

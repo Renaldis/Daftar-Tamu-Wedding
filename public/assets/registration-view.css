@@ -1,7 +1,6 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,6 +9,7 @@ body {
   background: url(../assets/img/bg-rsvp.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  padding: 10px;
 }
 
 .formulir-rsvp {
@@ -46,9 +46,9 @@ button:hover {
   background-color: #218838;
 }
 
-form {
+/* form {
   text-align: center;
-}
+} */
 
 input,
 textarea {
@@ -105,4 +105,9 @@ textarea:focus {
 
 .confirm-wrapping button {
   margin: 0 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
 }

@@ -46,7 +46,7 @@ music.addEventListener("play", function () {
 // music control
 
 // Set tanggal target untuk countdown
-const weddingDate = new Date("December 31, 2024 19:30:00").getTime();
+const weddingDate = new Date("Januari 21, 2025 19:30:00").getTime();
 
 // Update countdown setiap 1 detik
 const countdownFunction = setInterval(function () {
@@ -71,7 +71,7 @@ const countdownFunction = setInterval(function () {
   if (distance < 0) {
     clearInterval(countdownFunction);
     document.querySelector(".countdown-timer").innerHTML =
-      "The event has started!";
+      "Acara telah dimulai!";
   }
 }, 1000);
 

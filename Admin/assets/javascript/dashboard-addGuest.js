@@ -11,7 +11,7 @@ function confirmSubmission(event) {
   // const foodPreference = document.querySelector(
   //   'input[name="food_preference"]'
   // ).value;
-  const notes = document.querySelector('textarea[name="notes"]').value;
+  // const notes = document.querySelector('textarea[name="notes"]').value;
 
   // Buat pesan konfirmasi
   const message =
@@ -19,9 +19,9 @@ function confirmSubmission(event) {
     `<p>Nama: ${name}</p>` +
     `<p>Email: ${email}</p>` +
     `<p>Telepon: ${phone}</p>` +
-    `<p>Jumlah Tamu: ${guestsCount}</p>` +
-    // `<p>Preferensi Makanan: ${foodPreference}</p>` +
-    `<p>Catatan: ${notes}`;
+    `<p>Jumlah Tamu: ${guestsCount}</p>`;
+  // `<p>Preferensi Makanan: ${foodPreference}</p>` +
+  // `<p>Catatan: ${notes}`;
 
   // Tampilkan pesan konfirmasi di modal
   document.getElementById("confirmation-message").innerHTML = message;
